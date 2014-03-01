@@ -39,5 +39,8 @@ class ChillSlide
 
 $ ->
 	$(window).load ->
-		window.chillSlide = new ChillSlide($(".chill-slide__container"), {numOfRows: 3})
+		window.chillSlide = new ChillSlide(
+			container: $(".chill-slide__container"),
+			numOfRows: 2
+		)
 
