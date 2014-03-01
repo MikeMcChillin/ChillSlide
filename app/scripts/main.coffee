@@ -6,7 +6,7 @@
 
 class ChillSlide
 
-	constructor: (container, options={}) ->
+	constructor: (options={}) ->
 		# Set some default options
 		@container = options.container ? $(".chill-slide__container")
 		@numOfRows = options.numOfRows ? 2

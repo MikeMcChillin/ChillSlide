@@ -58,3 +58,6 @@ Pass the jQuery selector of the unordered lists' container and specify the numbe
             container: $(".chill-slide__container"), 
             numOfRows: 3
         )
+
+# Building
+`grunt serve`, `grunt build`
