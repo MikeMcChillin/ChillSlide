@@ -1,6 +1,8 @@
 ChillSlide
 ==========
 
+Creates a multi-row sliding wrapper on an unordered list.
+
 # Dependencies
 [imagesLoaded](https://github.com/desandro/imagesloaded) - To make sure image widths are calculated correcly.
 
