@@ -63,6 +63,6 @@ $ ->
 	$(window).load ->
 		window.chillSlide = new ChillSlide(
 			container: $(".chill-slide__container"),
-			numOfRows: 2
+			numOfRows: 3
 		)
 
