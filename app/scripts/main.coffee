@@ -8,16 +8,20 @@ class ChillSlide
 
 	constructor: (options={}) ->
 
+		# Create empty arrays
 		ChillSlide.rowWidths = []
 		ChillSlide.eachRow = []
 		ChillSlide.addedWidths = []
 
+		# Set defaults
 		@container = options.container ? $(".chill-slide__container")
 		@numOfRows = options.numOfRows ? 2
 
+		# Cache selectors
 		@slidee = @container.find("ul")
 		@items = @slidee.find("li")
 
+		# Execute functions
 		@createRowWidthsArray()
 		@splitArray(ChillSlide.rowWidths)
 		@calculateWidths(ChillSlide.eachRow)
