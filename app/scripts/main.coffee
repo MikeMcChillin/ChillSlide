@@ -7,48 +7,56 @@
 class ChillSlide
 
 	constructor: (options={}) ->
-		# Set some default options
-		ChillSlide.width = 0
+
+		ChillSlide.rowWidths = []
+		ChillSlide.eachRow = []
+		ChillSlide.addedWidths = []
+
 		@container = options.container ? $(".chill-slide__container")
 		@numOfRows = options.numOfRows ? 2
+
 		@slidee = @container.find("ul")
 		@items = @slidee.find("li")
-		@createRows()
-		@wrapUl()
-		@calculateWidths()
 
-	createRows: () =>
+		@createRowWidthsArray()
+		@splitArray(ChillSlide.rowWidths)
+		@calculateWidths(ChillSlide.eachRow)
+		@largestWidth(ChillSlide.addedWidths)
+		@setWidth()
+
+	createRowWidthsArray: () =>
+		rowWidth = 0
+		@container.find("li").each ->
+			rowWidth = $(this).outerWidth()
+			ChillSlide.rowWidths.push(rowWidth)
+
+	splitArray: (rowWidths) =>
 		numItemsInRow = Math.ceil(@items.length / @numOfRows)
-		$lis = @slidee.children().filter(":gt(" + (numItemsInRow - 1) + ")")
-		loop_ = Math.ceil($lis.length / numItemsInRow)
 		i = 0
+		eachRow = []
+		while i < rowWidths.length
+			temparray = rowWidths.slice(i, i + numItemsInRow)
+			ChillSlide.eachRow.push(temparray)
+			i += numItemsInRow
 
-		while i < loop_
-		  @slidee = $("<ul />").append($lis.slice(i * numItemsInRow, (i * numItemsInRow) + numItemsInRow)).insertAfter(@slidee)
-		  i++
+	calculateWidths: (array) =>
+		i = 0
+		# Loop thru array of multiple arrays
+		while i < array.length
+			sum = 0
+			# Get into a each array and add up the sum
+			$.each array[i], ->
+				sum += parseFloat(this) or 0
 
-	wrapUl: () =>
-		@container.children().wrapAll("<div class='chill-slide__slidee'></div>")
+			ChillSlide.addedWidths.push(sum)
+			i++
 
-	calculateWidths: () =>
-		@container.imagesLoaded =>
-			rowWidths = []
-			@container.find("ul").each (i, obj) ->
+	largestWidth: (array) =>
+		ChillSlide.largestWidth = Math.max.apply( Math, array )
 
-				rowWidth = 0
-				$(this).find("li").each (i, obj) ->
-					rowWidth = rowWidth + $(this).outerWidth()
-					$(this).addClass "item"
-
-				$(this).addClass "row#{i + 1}"
-				rowWidths.push(rowWidth)
-				ChillSlide.width = Math.max.apply Math, rowWidths
-
-			@setWidth(ChillSlide.width)
-
-	setWidth: (width) =>
-		@container.find(".chill-slide__slidee").css
-			"width": width
+	setWidth: () =>
+		@slidee.css
+			"width": ChillSlide.largestWidth
 
 
 $ ->
