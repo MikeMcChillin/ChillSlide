@@ -13,8 +13,12 @@ class ChillSlide
 		@slidee = @container.find("ul")
 		@items = @slidee.find("li")
 
+		ChillSlide.end = 0
+		ChillSlide.vw = $(window).width()
+
 		# Set options defaults
 		@numOfRows = options.numOfRows ? @container.attr("data-cs-rows") or 1
+		@scrollThrottle = options.scrollThrottle ? 3
 
 		# Create empty arrays
 		ChillSlide.rowWidths = []
@@ -28,6 +32,8 @@ class ChillSlide
 		@largestWidth(ChillSlide.addedWidths)
 		@setWidth()
 		@loaded()
+		@initWheelSimple(@scrollThrottle)
+
 
 	#############################
 	# createRowWidthsArray() returns an array
@@ -96,6 +102,57 @@ class ChillSlide
 		@container.addClass "loaded"
 		ChillSlide.loaded = true
 
+	getTransform = (el) ->
+		results = $(el).css("transform").match(/matrix(?:(3d)\(\d+(?:, \d+)*(?:, (\d+))(?:, (\d+))(?:, (\d+)), \d+\)|\(\d+(?:, \d+)*(?:, (\d+))(?:, (\d+))\))/)
+		unless results
+			return [0, 0, 0]
+		return results.slice(2, 5)  if results[1] is "3d"
+		results.push 0
+		results.slice 5, 8
+
+	# initWheel: () =>
+	# 	position = 0
+	# 	@container.on "mousewheel", (event) ->
+	# 		distanceX = event.deltaX * event.deltaFactor
+	# 		position = position + distanceX
+	# 		console.log "position: #{position}"
+	# 		ChillSlide.end = -(ChillSlide.largestWidth - ChillSlide.vw)
+
+	# 		if ((position <= -5) and (position >= ChillSlide.end))
+	# 			$(this).find("ul").css
+	# 				"-webkit-transform": "translate3d(#{position}px, 0, 0)"
+
+	initWheelSimple: (throttle) =>
+
+		@container.on "mousewheel", (event) ->
+			lastAnimation = 0
+			animationTime = 1000
+			quietPeriod = 500
+
+			timeNow = new Date().getTime()
+			distanceX = event.deltaX * event.deltaFactor
+			distanceY = event.deltaY * event.deltaFactor
+
+			# throttle = 3
+
+			# Simple throttle first to make sure
+			# we're not firing events like crazy
+			if (timeNow - lastAnimation < quietPeriod + animationTime)
+		        event.preventDefault()
+		        console.log "throttl'd"
+
+			if ((distanceY < -throttle) or (distanceY > throttle)) and ((distanceX > -throttle) or (distanceX < throttle))
+				lastAnimation = timeNow
+				$(this).css
+					"overflow-x": "hidden"
+			else
+				lastAnimation = timeNow
+				$(this).css
+					"overflow-x": "scroll"
+
+
+
+
 
 #############################
 # Turn it into a jQuery plugin
@@ -107,6 +164,8 @@ $.fn.extend
 			$this = $(this)
 			new ChillSlide($this, options)
 $ ->
-	$(window).load ->
-		$(".chill-slide").chillSlide()
+	# $(window).load ->
+	$(".chill-slide").chillSlide
+		"numOfRows": 3
+		"scrollThrottle": 3
 

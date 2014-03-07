@@ -9,6 +9,10 @@ Creates a multi-row sliding wrapper on an unordered list.
 # Options:
 Set the number of rows by a data-selector on your slider. If you don't set a data-selector, it will default to 1 row.
 
+    $(".chill-slide").chillSlide
+        "numOfRows": 3 // The number of rows to create. Can alternatively be specified on the ChillSlide container as a `data-cs-rows` data attribute.
+        "scrollThrottle": 3 // The number of px to throttle the scroll tolerance. Lower is usually better. Default: 3
+
 
 # Markup
 Accepts an unordered list wrapped in a container.
@@ -56,3 +60,8 @@ Pass the jQuery selector of the unordered lists' container and specify the numbe
 
 # Building
 `grunt serve`, `grunt build`
+
+# Roadmap
+Throttle scroll
+Resize Event
+Option: Order doesn't matter, just make the rows as even-width as possible.
