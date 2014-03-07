@@ -110,17 +110,6 @@ class ChillSlide
 		results.push 0
 		results.slice 5, 8
 
-	# initWheel: () =>
-	# 	position = 0
-	# 	@container.on "mousewheel", (event) ->
-	# 		distanceX = event.deltaX * event.deltaFactor
-	# 		position = position + distanceX
-	# 		console.log "position: #{position}"
-	# 		ChillSlide.end = -(ChillSlide.largestWidth - ChillSlide.vw)
-
-	# 		if ((position <= -5) and (position >= ChillSlide.end))
-	# 			$(this).find("ul").css
-	# 				"-webkit-transform": "translate3d(#{position}px, 0, 0)"
 
 	initWheelSimple: (throttle) =>
 
@@ -132,8 +121,6 @@ class ChillSlide
 			timeNow = new Date().getTime()
 			distanceX = event.deltaX * event.deltaFactor
 			distanceY = event.deltaY * event.deltaFactor
-
-			# throttle = 3
 
 			# Simple throttle first to make sure
 			# we're not firing events like crazy
