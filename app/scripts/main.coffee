@@ -20,6 +20,8 @@ class ChillSlide
 		@numOfRows = options.numOfRows ? @container.attr("data-cs-rows") or 1
 		@scrollThrottle = options.scrollThrottle ? 3
 
+		console.log "scrollThrottle: #{@scrollThrottle}"
+
 		# Create empty arrays
 		ChillSlide.rowWidths = []
 		ChillSlide.eachRow = []
@@ -32,7 +34,7 @@ class ChillSlide
 		@largestWidth(ChillSlide.addedWidths)
 		@setWidth()
 		@loaded()
-		@initWheelSimple(@scrollThrottle)
+		@wheelThrottle(@scrollThrottle)
 
 
 	#############################
@@ -102,16 +104,8 @@ class ChillSlide
 		@container.addClass "loaded"
 		ChillSlide.loaded = true
 
-	getTransform = (el) ->
-		results = $(el).css("transform").match(/matrix(?:(3d)\(\d+(?:, \d+)*(?:, (\d+))(?:, (\d+))(?:, (\d+)), \d+\)|\(\d+(?:, \d+)*(?:, (\d+))(?:, (\d+))\))/)
-		unless results
-			return [0, 0, 0]
-		return results.slice(2, 5)  if results[1] is "3d"
-		results.push 0
-		results.slice 5, 8
 
-
-	initWheelSimple: (throttle) =>
+	wheelThrottle: (throttle) =>
 
 		@container.on "mousewheel", (event) ->
 			lastAnimation = 0
@@ -140,7 +134,6 @@ class ChillSlide
 
 
 
-
 #############################
 # Turn it into a jQuery plugin
 #############################
@@ -153,6 +146,6 @@ $.fn.extend
 $ ->
 	# $(window).load ->
 	$(".chill-slide").chillSlide
-		"numOfRows": 3
+		# "numOfRows": 3
 		"scrollThrottle": 3
 
