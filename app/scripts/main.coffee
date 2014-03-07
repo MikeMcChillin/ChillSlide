@@ -108,5 +108,5 @@ $.fn.extend
 			new ChillSlide($this, options)
 $ ->
 	$(window).load ->
-		$(".slider").chillSlide()
+		$(".chill-slide").chillSlide()
 
