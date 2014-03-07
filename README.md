@@ -7,15 +7,13 @@ Creates a multi-row sliding wrapper on an unordered list.
 [imagesLoaded](https://github.com/desandro/imagesloaded) - To make sure image widths are calculated correcly.
 
 # Options:
-    window.chillSlide = new ChillSlide(
-        container: $(".chill-slide__container"), // jQuery selector.
-        numOfRows: 3 // Desired number of rows in slider.
-    )
+Set the number of rows by a data-selector on your slider. If you don't set a data-selector, it will default to 1 row.
+
 
 # Markup
 Accepts an unordered list wrapped in a container.
 
-    <div class="chill-slide__container">
+    <div class="chill-slide" data-num-rows="3">
         <ul>
             <li><img src="images/350x100.gif" alt="" /></li>
             <li><img src="images/50x100.gif" alt="" /></li>
@@ -46,18 +44,15 @@ Accepts an unordered list wrapped in a container.
             <li><img src="images/240x100.gif" alt="" /></li>
             <li><img src="images/280x100.gif" alt="" /></li>
             <li><img src="images/380x100.gif" alt="" /></li>
-            <li><img src="images/130x100.gif" alt="" /></li>                
-        </ul>            
+            <li><img src="images/130x100.gif" alt="" /></li>
+        </ul>
     </div>
 
 # Initialize
 Pass the jQuery selector of the unordered lists' container and specify the number of rows you'd like.
 
     $(window).load ->
-        window.chillSlide = new ChillSlide(
-            container: $(".chill-slide__container"), 
-            numOfRows: 3
-        )
+        $(".slider").chillSlide()
 
 # Building
 `grunt serve`, `grunt build`

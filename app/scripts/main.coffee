@@ -6,20 +6,20 @@
 
 class ChillSlide
 
-	constructor: (options={}) ->
+	constructor: (container, options={}) ->
+
+		# Cache selectors
+		@container = container
+		@slidee = @container.find("ul")
+		@items = @slidee.find("li")
+
+		# Set options defaults
+		@numOfRows = options.numOfRows ? @container.attr("data-cs-rows") or 1
 
 		# Create empty arrays
 		ChillSlide.rowWidths = []
 		ChillSlide.eachRow = []
 		ChillSlide.addedWidths = []
-
-		# Set defaults
-		@container = options.container ? $(".chill-slide__container")
-		@numOfRows = options.numOfRows ? 2
-
-		# Cache selectors
-		@slidee = @container.find("ul")
-		@items = @slidee.find("li")
 
 		# Execute functions
 		@createRowWidthsArray()
@@ -27,11 +27,12 @@ class ChillSlide
 		@calculateWidths(ChillSlide.eachRow)
 		@largestWidth(ChillSlide.addedWidths)
 		@setWidth()
+		@loaded()
 
-	#############################	
+	#############################
 	# createRowWidthsArray() returns an array
 	# of all the container's li's widths
-	# 
+	#
 	# @return Array []
 	#############################
 	createRowWidthsArray: () =>
@@ -40,10 +41,10 @@ class ChillSlide
 			rowWidth = $(this).outerWidth()
 			ChillSlide.rowWidths.push(rowWidth)
 
-	#############################	
+	#############################
 	# splitArray() returns an array
 	# with <@numOfRows> number of internal arrays,
-	# 
+	#
 	# @param Array []
 	# @return Array []
 	#############################
@@ -57,10 +58,10 @@ class ChillSlide
 			i += numItemsInRow
 
 
-	#############################	
+	#############################
 	# calculateWidths() returns an array
 	# of supplied array's sums
-	# 
+	#
 	# @param Array []
 	# @return Array []
 	#############################
@@ -77,10 +78,10 @@ class ChillSlide
 			i++
 
 
-	#############################	
+	#############################
 	# largestWidth() returns a number
 	# of highest value in given array
-	# 
+	#
 	# @param Array []
 	# @return Array []
 	#############################
@@ -91,11 +92,21 @@ class ChillSlide
 		@slidee.css
 			"width": ChillSlide.largestWidth
 
+	loaded: () =>
+		@container.addClass "loaded"
+		ChillSlide.loaded = true
 
+
+#############################
+# Turn it into a jQuery plugin
+#############################
+$ = jQuery
+$.fn.extend
+	chillSlide: (options) ->
+		this.each ->
+			$this = $(this)
+			new ChillSlide($this, options)
 $ ->
 	$(window).load ->
-		window.chillSlide = new ChillSlide(
-			container: $(".chill-slide__container"),
-			numOfRows: 2
-		)
+		$(".slider").chillSlide()
 

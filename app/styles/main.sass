@@ -1,3 +1,4 @@
+@import compass/css3
 ul
     list-style: none
     margin: 0
@@ -13,7 +14,8 @@ ul
 .cf
     *zoom: 1
 
-.chill-slide__container
+// .chill-slide__container
+.slider
     position: relative
     overflow-x: scroll
     margin: 6em 0
@@ -22,3 +24,15 @@ ul
     li
         float: left
         padding: 0 5px 5px 0
+    img
+        +opacity(0)
+        +transition(opacity 0.3s ease)
+    &.loaded
+        img
+            +opacity(1)
+
+
+@for $i from 1 through 40
+    .chill-slide__container
+        li:nth-child(#{$i}) img
+            +transition-delay(#{0.05s * $i})
