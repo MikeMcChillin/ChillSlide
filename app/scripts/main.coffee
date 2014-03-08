@@ -18,7 +18,7 @@ class ChillSlide
 
 		# Set options defaults
 		@numOfRows = options.numOfRows ? @container.attr("data-cs-rows") or 1
-		@scrollThrottle = options.scrollThrottle ? 3
+		@scrollThrottle = options.scrollThrottle ? 2
 
 		console.log "scrollThrottle: #{@scrollThrottle}"
 
@@ -145,7 +145,7 @@ $.fn.extend
 			new ChillSlide($this, options)
 $ ->
 	# $(window).load ->
-	$(".chill-slide").chillSlide
+	$(".chill-slide").chillSlide()
 		# "numOfRows": 3
-		"scrollThrottle": 3
+		# "scrollThrottle": 3
 
