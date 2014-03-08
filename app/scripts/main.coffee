@@ -34,7 +34,6 @@ class ChillSlide
         @largestWidth(ChillSlide.addedWidths)
         @setWidth()
         @loaded()
-        # @wheelThrottle(@scrollThrottle)
 
 
     #############################
@@ -103,34 +102,6 @@ class ChillSlide
     loaded: () =>
         @container.addClass "loaded"
         ChillSlide.loaded = true
-
-
-    wheelThrottle: (throttle) =>
-
-        @container.on "mousewheel", (event) ->
-            lastAnimation = 0
-            animationTime = 1000
-            quietPeriod = 500
-
-            timeNow = new Date().getTime()
-            distanceX = event.deltaX * event.deltaFactor
-            distanceY = event.deltaY * event.deltaFactor
-
-            # Simple throttle first to make sure
-            # we're not firing events like crazy
-            if (timeNow - lastAnimation < quietPeriod + animationTime)
-                event.preventDefault()
-                console.log "throttl'd"
-
-            if ((distanceY < -throttle) or (distanceY > throttle)) and ((distanceX > -throttle) or (distanceX < throttle))
-                lastAnimation = timeNow
-                $(this).css
-                    "overflow-x": "hidden"
-            else
-                lastAnimation = timeNow
-                $(this).css
-                    "overflow-x": "scroll"
-
 
 
 
