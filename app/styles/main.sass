@@ -49,20 +49,19 @@ ul
 
 
 
-=scrollbar($size, $primary, $secondary: lighten($primary, 15%))
+=scrollbar($size, $primary)
     ::-webkit-scrollbar
         width:  $size
         height: $size
     ::-webkit-scrollbar-thumb
         background: $primary
     ::-webkit-scrollbar-track
-        background: $secondary
+        background: whitesmoke
     body
         scrollbar-face-color: $primary
-        scrollbar-track-color: $secondary
 
 
-+scrollbar(.5em, #999)
++scrollbar(.5em, darken(whitesmoke, 5%))
 
 
 
