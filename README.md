@@ -1,7 +1,7 @@
 ChillSlide
 ==========
 
-Creates a multi-row sliding wrapper on an unordered list.
+Counts the items in your list and
 
 *** Not quite ready for production.
 
@@ -62,7 +62,7 @@ Accepts an unordered list wrapped in a container.
     </div>
 
 # Initialize
-Pass the jQuery selector of the unordered lists' container and specify the number of rows you'd like.
+Use jQuery, it's easy (and required for this plugin anyway).
 
     // Coffeescript
     $(window).load ->
@@ -82,4 +82,4 @@ Pass the jQuery selector of the unordered lists' container and specify the numbe
 
 
 # Roadmap
-Option: Order doesn't matter, just make the rows as even-width as possible.
+- Option: Use bin-packing library to get a tighter grid. Starting this on branch bin-pack.
