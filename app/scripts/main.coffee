@@ -34,7 +34,7 @@ class ChillSlide
         @largestWidth(ChillSlide.addedWidths)
         @setWidth()
         @loaded()
-        # @wheelThrottle(@scrollThrottle)
+        @wheelThrottle(@scrollThrottle)
 
 
     #############################
@@ -147,5 +147,5 @@ $ ->
     # $(window).load ->
     $(".chill-slide").chillSlide
         "numOfRows": 3
-        # "scrollThrottle": 2
+        "scrollThrottle": 3
 
