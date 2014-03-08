@@ -112,7 +112,6 @@ class ChillSlide
         ChillSlide.loaded = true
 
 
-
 #############################
 # Turn it into a jQuery plugin
 #############################
@@ -124,6 +123,7 @@ $.fn.extend
             new ChillSlide($this, options)
 
 $ ->
-    $(".chill-slide").chillSlide
-        "numOfRows": 3
+	$(window).load ->
+	    $(".chill-slide").chillSlide
+	        "numOfRows": 3
 

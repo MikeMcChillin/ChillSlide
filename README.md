@@ -3,16 +3,24 @@ ChillSlide
 
 Creates a multi-row sliding wrapper on an unordered list.
 
+*** Not quite ready for production.
+
 # Dependencies
-[imagesLoaded](https://github.com/desandro/imagesloaded) - To make sure image widths are calculated correcly.
+- jQuery
+- [imagesLoaded](https://github.com/desandro/imagesloaded) - To make sure image widths are calculated correcly.
 
 # Options:
 Set the number of rows by a data-selector on your slider. If you don't set a data-selector, it will default to 1 row.
 
+    // Coffeescript
     $(".chill-slide").chillSlide
         "numOfRows": 3 // The number of rows to create. Can alternatively be specified on the ChillSlide container as a `data-cs-rows` data attribute. If you specify both, this option will be preferred over the data-selector. Default: 1
-        "scrollThrottle": 3 // The number of px to throttle the scroll tolerance. Lower is usually better. Default: 3
 
+
+    // Javascript
+    $(".chill-slide").chillSlide({
+        "numOfRows": 3
+    });
 
 # Markup
 Accepts an unordered list wrapped in a container.
@@ -49,19 +57,29 @@ Accepts an unordered list wrapped in a container.
             <li><img src="images/280x100.gif" alt="" /></li>
             <li><img src="images/380x100.gif" alt="" /></li>
             <li><img src="images/130x100.gif" alt="" /></li>
+            <!-- Or any number of images, really. That's the point. ;) -->
         </ul>
     </div>
 
 # Initialize
 Pass the jQuery selector of the unordered lists' container and specify the number of rows you'd like.
 
+    // Coffeescript
     $(window).load ->
-        $(".slider").chillSlide()
+        $(".chill-slide").chillSlide()
 
-# Building
-`grunt serve`, `grunt build`
+    // Javascript
+    $(window).load(function() {
+      $(".chill-slide").chillSlide();
+    });
+
+
+# Installing / Building
+1. `npm install`
+2. `bower Install`
+3. `grunt serve`
+4. To build: `grunt build`
+
 
 # Roadmap
-Throttle scroll
-Resize Event
 Option: Order doesn't matter, just make the rows as even-width as possible.
