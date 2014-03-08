@@ -94,7 +94,7 @@ class ChillSlide
     # setWidth() applies width in px to
     # @container's ul
     #
-    # @return css.width
+    # @return css width in px
     #############################
     setWidth: () =>
         @slidee.css
@@ -102,11 +102,10 @@ class ChillSlide
 
 
     #############################
-    # largestWidth() returns a number
-    # of highest value in given array
+    # loaded() adds a class to the container
+    # and sets a boolean to true
     #
-    # @param Array []
-    # @return Array []
+    # @return addClass, boolean
     #############################
     loaded: () =>
         @container.addClass "loaded"
