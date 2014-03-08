@@ -13,14 +13,8 @@ class ChillSlide
         @slidee = @container.find("ul")
         @items = @slidee.find("li")
 
-        ChillSlide.end = 0
-        ChillSlide.vw = $(window).width()
-
         # Set options defaults
         @numOfRows = options.numOfRows ? @container.attr("data-cs-rows") or 1
-        @scrollThrottle = options.scrollThrottle ? 3
-
-        console.log "scrollThrottle: #{@scrollThrottle}"
 
         # Create empty arrays
         ChillSlide.rowWidths = []
@@ -95,10 +89,25 @@ class ChillSlide
     largestWidth: (array) =>
         ChillSlide.largestWidth = Math.max.apply( Math, array )
 
+
+    #############################
+    # setWidth() applies width in px to
+    # @container's ul
+    #
+    # @return css.width
+    #############################
     setWidth: () =>
         @slidee.css
             "width": ChillSlide.largestWidth
 
+
+    #############################
+    # largestWidth() returns a number
+    # of highest value in given array
+    #
+    # @param Array []
+    # @return Array []
+    #############################
     loaded: () =>
         @container.addClass "loaded"
         ChillSlide.loaded = true
@@ -114,9 +123,8 @@ $.fn.extend
         this.each ->
             $this = $(this)
             new ChillSlide($this, options)
+
 $ ->
-    # $(window).load ->
     $(".chill-slide").chillSlide
         "numOfRows": 3
-        # "scrollThrottle": 2
 
