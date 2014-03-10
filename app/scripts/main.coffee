@@ -12,6 +12,7 @@ class ChillSlide
         @container = container
         @slidee = @container.find("ul")
         @items = @slidee.find("li")
+        @vw = $(window).width()
 
         # Set options defaults
         @numOfRows = options.numOfRows ? @container.attr("data-cs-rows") or 1
@@ -21,6 +22,11 @@ class ChillSlide
         ChillSlide.eachRow = []
         ChillSlide.addedWidths = []
 
+        ChillSlide.position = 0
+        ChillSlide.slideAmount = 0
+
+
+
         # Execute functions
         @createRowWidthsArray()
         @splitArray(ChillSlide.rowWidths)
@@ -28,6 +34,8 @@ class ChillSlide
         @largestWidth(ChillSlide.addedWidths)
         @setWidth()
         @loaded()
+        @calculateAverageWidth(ChillSlide.rowWidths)
+        @initInteractions()
 
 
     #############################
@@ -41,6 +49,8 @@ class ChillSlide
         @container.find("li").each ->
             rowWidth = $(this).outerWidth()
             ChillSlide.rowWidths.push(rowWidth)
+            # console.log "ChillSlide.rowWidths: #{ChillSlide.rowWidths}"
+
 
     #############################
     # splitArray() returns an array
@@ -76,8 +86,48 @@ class ChillSlide
                 sum += parseFloat(this) or 0
 
             ChillSlide.addedWidths.push(sum)
+            # console.log "ChillSlide.addedWidths: #{ChillSlide.addedWidths}"
             i++
 
+
+    #############################
+    # calculateAverageWidth() returns an integer
+    # of supplied array's average Widths.
+    #
+    # @param Array []
+    # @return Array []
+    #############################
+    calculateAverageWidth: (array) =>
+        totalWidths = 0
+        $.each array, ->
+            totalWidths += this
+        ChillSlide.averageWidth = totalWidths/array.length
+        ChillSlide.slideAmount = (ChillSlide.averageWidth / ChillSlide.largestWidth) * 100
+        console.log "Average: #{ChillSlide.averageWidth}"
+
+
+    moveRight: (amount) =>
+        ChillSlide.position = ChillSlide.position - amount
+        max = -(@slidee.width() - @vw) / @slidee.width() * 100
+        if (ChillSlide.position - amount) <= max
+            ChillSlide.position = max
+            @slidee.css
+                "-webkit-transform": "translate3d(#{ChillSlide.position}%, 0, 0)"
+        @slidee.css
+            "-webkit-transform": "translate3d(#{ChillSlide.position}%, 0, 0)"
+
+
+    moveLeft: (amount) =>
+        ChillSlide.position = ChillSlide.position + amount
+        max = 0
+        console.log "max: #{max}"
+        if (ChillSlide.position + amount) >= max
+            console.log "fuck"
+            ChillSlide.position = 0
+            @slidee.css
+                "-webkit-transform": "translate3d(#{ChillSlide.position}%, 0, 0)"
+        @slidee.css
+            "-webkit-transform": "translate3d(#{ChillSlide.position}%, 0, 0)"
 
     #############################
     # largestWidth() returns a number
@@ -111,6 +161,15 @@ class ChillSlide
         @container.addClass "loaded"
         ChillSlide.loaded = true
 
+    initInteractions: () =>
+        nextButton = @container.find("[data-cs-nav='next']")
+        prevButton = @container.find("[data-cs-nav='prev']")
+
+        nextButton.on "click", (e) =>
+            @moveRight(ChillSlide.slideAmount)
+
+        prevButton.on "click", (e) =>
+            @moveLeft(ChillSlide.slideAmount)
 
 #############################
 # Turn it into a jQuery plugin
@@ -123,7 +182,7 @@ $.fn.extend
             new ChillSlide($this, options)
 
 $ ->
-	$(window).load ->
-	    $(".chill-slide").chillSlide
-	        "numOfRows": 3
+  $(window).load ->
+      $(".chill-slide").chillSlide()
+          # "numOfRows": 3
 
