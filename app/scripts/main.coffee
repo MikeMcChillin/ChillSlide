@@ -36,6 +36,7 @@ class ChillSlide
         @loaded()
         @calculateAverageWidth(ChillSlide.rowWidths)
         @initInteractions()
+        @resize()
 
 
     #############################
@@ -170,6 +171,11 @@ class ChillSlide
 
         prevButton.on "click", (e) =>
             @moveLeft(ChillSlide.slideAmount)
+
+
+    resize: () =>
+        $(window).on "resize", (e) =>
+            @vw = $(window).width()
 
 #############################
 # Turn it into a jQuery plugin
