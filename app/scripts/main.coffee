@@ -104,7 +104,8 @@ class ChillSlide
             totalWidths += this
         ChillSlide.averageWidth = totalWidths/array.length
         ChillSlide.slideAmount = (ChillSlide.averageWidth / ChillSlide.largestWidth) * 100
-        console.log "Average: #{ChillSlide.averageWidth}"
+        # console.log "ChillSlide.averageWidth: #{ChillSlide.averageWidth}"
+        # console.log "ChillSlide.slideAmount: #{ChillSlide.slideAmount}"
 
 
     moveRight: (amount) =>
@@ -123,7 +124,6 @@ class ChillSlide
         max = 0
         console.log "max: #{max}"
         if (ChillSlide.position + amount) >= max
-            console.log "fuck"
             ChillSlide.position = 0
             @slidee.css
                 "-webkit-transform": "translate3d(#{ChillSlide.position}%, 0, 0)"
@@ -171,6 +171,7 @@ class ChillSlide
 
         prevButton.on "click", (e) =>
             @moveLeft(ChillSlide.slideAmount)
+
 
 
     resize: () =>
